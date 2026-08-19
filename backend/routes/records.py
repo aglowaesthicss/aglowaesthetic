@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form, Header
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from bson import ObjectId
 from typing import List, Optional
 import datetime
+import urllib.request
 import cloudinary.uploader
 
 from auth import get_current_user, RoleChecker, FeatureChecker
@@ -130,8 +132,14 @@ def upload_invoice_file(
         ext = filename.split(".")[-1] if "." in filename else ""
         random_id = str(uuid.uuid4())
         
-        res_type = "raw" if ext == "pdf" or file.content_type == "application/pdf" else "auto"
-        public_id = f"aglow_invoices/{random_id}.{ext}" if ext else f"aglow_invoices/{random_id}"
+        if ext == "pdf" or file.content_type == "application/pdf":
+            res_type = "raw"
+            save_ext = "bin"
+        else:
+            res_type = "auto"
+            save_ext = ext
+            
+        public_id = f"aglow_invoices/{random_id}.{save_ext}" if save_ext else f"aglow_invoices/{random_id}"
         
         result = cloudinary.uploader.upload(
             file.file,
@@ -286,3 +294,83 @@ def delete_session(
         raise HTTPException(status_code=404, detail="Session record not found")
         
     return {"message": "Session deleted successfully"}
+
+@router.get("/history/{history_id}/invoice")
+def get_invoice_pdf(
+    history_id: str,
+    token: Optional[str] = None,
+    authorization: Optional[str] = Header(None)
+):
+    final_token = None
+    if authorization and authorization.startswith("Bearer "):
+        final_token = authorization[7:]
+    elif token:
+        final_token = token
+        
+    if not final_token:
+        raise HTTPException(status_code=401, detail="Authentication token missing")
+        
+    try:
+        from jose import jwt
+        from config import settings
+        payload = jwt.decode(final_token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
+        email = payload.get("sub")
+        if not email:
+            raise HTTPException(status_code=401, detail="Invalid token payload")
+        current_user = get_users_col().find_one({"email": email})
+        if not current_user:
+            raise HTTPException(status_code=401, detail="User not found")
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    history_col = get_service_histories_col()
+    try:
+        obj_id = ObjectId(history_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid record ID format")
+        
+    record = history_col.find_one({"_id": obj_id})
+    if not record:
+        raise HTTPException(status_code=404, detail="Service history record not found")
+        
+    if current_user["role"] == "client":
+        if record.get("client_user_id") != str(current_user["_id"]):
+            raise HTTPException(status_code=403, detail="You do not have access to this invoice")
+            
+    invoice_url = record.get("invoice_url")
+    if not invoice_url:
+        raise HTTPException(status_code=404, detail="No invoice uploaded for this record")
+        
+    try:
+        req = urllib.request.Request(
+            invoice_url,
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
+        response = urllib.request.urlopen(req)
+        
+        if invoice_url.lower().endswith(".bin") or invoice_url.lower().endswith(".pdf"):
+            content_type = "application/pdf"
+            filename = "invoice.pdf"
+        else:
+            content_type = "image/jpeg"
+            filename = "invoice.jpg"
+            if ".png" in invoice_url.lower():
+                content_type = "image/png"
+                filename = "invoice.png"
+                
+        def iter_content():
+            while True:
+                chunk = response.read(64 * 1024)
+                if not chunk:
+                    break
+                yield chunk
+                
+        return StreamingResponse(
+            iter_content(),
+            media_type=content_type,
+            headers={
+                "Content-Disposition": f"inline; filename=\"{filename}\""
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch invoice from storage: {e}")

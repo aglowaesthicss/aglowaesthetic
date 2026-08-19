@@ -819,7 +819,7 @@ function DashboardPage() {
                               <td className="py-4 text-primary font-bold">₹{h.price}</td>
                               <td className="py-4">
                                 {h.invoice_url ? (
-                                  <a href={h.invoice_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-primary hover:underline font-medium">
+                                  <a href={api.url(`/api/records/history/${h.id}/invoice?token=${localStorage.getItem("aglow_token")}`)} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-primary hover:underline font-medium">
                                     Invoice <ExternalLink className="size-3" />
                                   </a>
                                 ) : <span className="text-zinc-600">N/A</span>}
@@ -1355,7 +1355,7 @@ function DashboardPage() {
                                   <td className="py-3.5 px-5 text-zinc-100 font-medium">{h.service_name}</td>
                                   <td className="py-3.5 px-5">
                                     {h.invoice_url ? (
-                                      <a href={h.invoice_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-primary hover:underline font-medium">
+                                      <a href={api.url(`/api/records/history/${h.id}/invoice?token=${localStorage.getItem("aglow_token")}`)} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-primary hover:underline font-medium">
                                         View PDF <ExternalLink className="size-3" />
                                       </a>
                                     ) : <span className="text-zinc-600">No invoice</span>}
