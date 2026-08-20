@@ -71,14 +71,6 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a
-            href={SITE.phoneHref}
-            className="flex items-center gap-2 text-xs tracking-[0.12em] text-muted-foreground transition-colors hover:text-primary mr-2"
-          >
-            <Phone className="size-3.5" />
-            {SITE.phone}
-          </a>
-          
           {isAuthenticated ? (
             <>
               <Button asChild variant="luxeOutline" size="lg">

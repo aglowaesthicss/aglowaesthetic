@@ -719,7 +719,7 @@ function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+    <div className="dark min-h-screen bg-zinc-950 text-zinc-100 font-sans">
       {/* Dashboard Sub Header */}
       <section className="border-b border-border/60 bg-zinc-900/30">
         <div className="mx-auto max-w-6xl px-5 py-8 flex flex-wrap items-center justify-between gap-4">
@@ -1547,9 +1547,11 @@ function DashboardPage() {
                             <SelectTrigger id="provider">
                               <SelectValue placeholder="Select LLM" />
                             </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="gemini">Google Gemini (uses gemini-1.5-flash)</SelectItem>
+                            <SelectContent className="bg-zinc-900 border-border text-zinc-100">
+                              <SelectItem value="gemini">Google Gemini (uses gemini-2.5-flash)</SelectItem>
                               <SelectItem value="openai">OpenAI (uses gpt-4o-mini)</SelectItem>
+                              <SelectItem value="mistral">Mistral AI (uses mistral-small-latest)</SelectItem>
+                              <SelectItem value="groq">Groq (uses llama3-8b-8192)</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>

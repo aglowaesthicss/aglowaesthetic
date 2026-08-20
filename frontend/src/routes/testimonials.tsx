@@ -82,7 +82,7 @@ function Testimonials() {
                 )}
 
                 {t.quote || t.text ? (
-                  <blockquote className="flex-1 font-display text-xl leading-relaxed text-zinc-200">
+                  <blockquote className="flex-1 font-display text-xl leading-relaxed text-zinc-800">
                     “{t.quote || t.text}”
                   </blockquote>
                 ) : null}

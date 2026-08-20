@@ -125,7 +125,7 @@ function Services() {
               <div key={catName} className="grid gap-8 lg:grid-cols-[1fr_1.3fr] animate-in fade-in duration-300">
                 <div>
                   <p className="eyebrow">{String(i + 1).padStart(2, "0")}</p>
-                  <h2 className="mt-3 text-3xl leading-tight font-serif text-zinc-100">{catName}</h2>
+                  <h2 className="mt-3 text-3xl leading-tight font-serif text-zinc-900">{catName}</h2>
                   <div className="rule-gold mt-5" />
                   <p className="mt-5 text-sm leading-relaxed text-muted-foreground font-light">
                     Premium clinical services under {catName.toLowerCase()} delivered with Korean precision and standard care.
@@ -149,12 +149,12 @@ function Services() {
                         )}
                       </div>
                       <div className="p-6 space-y-3">
-                        <h3 className="font-serif text-lg text-zinc-100">{s.name}</h3>
+                        <h3 className="font-serif text-lg text-zinc-900">{s.name}</h3>
                         <p className="text-xs text-muted-foreground leading-relaxed font-light line-clamp-3">{s.description}</p>
                         <div className="flex justify-between items-center pt-2">
                           <span className="text-[0.7rem] uppercase tracking-wider text-primary font-medium">Korean Standard</span>
                           {s.price ? (
-                            <span className="text-sm font-bold text-zinc-200">₹{s.price}</span>
+                            <span className="text-sm font-bold text-zinc-800">₹{s.price}</span>
                           ) : (
                             <span className="text-xs text-muted-foreground italic">Pricing on consultation</span>
                           )}
