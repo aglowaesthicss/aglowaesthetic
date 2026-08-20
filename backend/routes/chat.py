@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from pydantic import BaseModel
 from typing import List, Optional
 import litellm
+import datetime
 
 from db import (
     get_services_col,
@@ -19,7 +20,7 @@ class ChatRequest(BaseModel):
     history: Optional[List[dict]] = []
 
 class LLMSettingsSave(BaseModel):
-    provider: str  # 'gemini' or 'openai'
+    provider: str  # 'gemini' or 'openai' or 'Mistral'
     api_key: str
 
 @router.post("")
@@ -41,6 +42,10 @@ def chat_with_bot(request: ChatRequest):
             api_key = settings.GEMINI_API_KEY
         elif provider == "openai" and settings.OPENAI_API_KEY:
             api_key = settings.OPENAI_API_KEY
+        elif provider == "mistral" and settings.MISTRAL_API_KEY:
+            api_key = settings.MISTRAL_API_KEY
+        elif provider == "groq" and settings.GROQ_API_KEY:
+            api_key = settings.GROQ_API_KEY
             
     if not api_key:
         raise HTTPException(
@@ -78,7 +83,6 @@ def chat_with_bot(request: ChatRequest):
         locations_str = "- Puzhuthivakkam Branch: Sapthagiri Nagar, Inner Ring Road, Puzhuthivakkam, Chennai - 600091\n"
         
     # Format Offers (active ones)
-    import datetime
     today = datetime.datetime.utcnow().strftime("%Y-%m-%d")
     offers_str = ""
     for o in offers:
@@ -124,12 +128,19 @@ Rules:
     try:
         if provider == "openai":
             model_name = "gpt-4o-mini"
+        elif provider == "mistral":
+            model_name = "mistral/mistral-small-latest"
+        elif provider == "groq":
+            model_name = "groq/llama3-8b-8192"
         else:
-            model_name = "gemini/gemini-1.5-flash"
+            model_name = "gemini/gemini-2.5-flash"
 
         messages = [{"role": "system", "content": system_prompt}]
         for h in request.history[-6:]:
-            messages.append({"role": h.get("role"), "content": h.get("content")})
+            role = h.get("role", "user")
+            if role == "model":
+                role = "assistant"
+            messages.append({"role": role, "content": h.get("content")})
         messages.append({"role": "user", "content": request.message})
 
         response = litellm.completion(
@@ -154,10 +165,10 @@ def save_llm_settings(
     request: LLMSettingsSave,
     current_user: dict = Depends(RoleChecker(["master_admin"]))
 ):
-    if request.provider not in ["gemini", "openai"]:
+    if request.provider not in ["gemini", "openai", "mistral", "groq"]:
         raise HTTPException(
             status_code=400,
-            detail="Invalid LLM Provider. Must be 'gemini' or 'openai'"
+            detail="Invalid LLM Provider. Must be 'gemini', 'openai', 'mistral', or 'groq'"
         )
         
     settings_col = get_settings_col()
@@ -173,7 +184,14 @@ def save_llm_settings(
         upsert=True
     )
     
-    selected_model = "gemini-1.5-flash" if request.provider == "gemini" else "gpt-4o-mini"
+    selected_model = "gemini-2.5-flash"
+    if request.provider == "openai":
+        selected_model = "gpt-4o-mini"
+    elif request.provider == "mistral":
+        selected_model = "mistral-small-latest"
+    elif request.provider == "groq":
+        selected_model = "llama3-8b-8192"
+        
     return {
         "message": f"LLM settings saved. Selected model: {selected_model}",
         "provider": request.provider,

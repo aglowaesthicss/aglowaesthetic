@@ -82,8 +82,9 @@ function SettingsPage() {
   };
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-12">
-      <div className="border-b border-border/60 pb-6">
+    <div className="dark min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+      <main className="mx-auto max-w-4xl px-5 py-12">
+        <div className="border-b border-border/60 pb-6">
         <h1 className="font-serif text-3xl sm:text-4xl text-zinc-100">Portal Settings</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Manage your personal details, credentials, and settings.
@@ -195,5 +196,6 @@ function SettingsPage() {
         </div>
       </div>
     </main>
+  </div>
   );
 }

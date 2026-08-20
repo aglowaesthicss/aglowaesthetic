@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     # We allow these to be set as fallbacks if the DB doesn't have them yet
     OPENAI_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
+    MISTRAL_API_KEY: str = ""
+    GROQ_API_KEY: str = ""
 
     class Config:
         env_file = ".env"

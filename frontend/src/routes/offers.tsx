@@ -100,7 +100,7 @@ function Offers() {
                     </span>
                   )}
                 </div>
-                <h2 className="mt-4 text-3xl font-serif text-zinc-100">{o.title}</h2>
+                <h2 className="mt-4 text-3xl font-serif text-zinc-900">{o.title}</h2>
                 <p className="mt-2 text-4xl text-gold-gradient font-bold">{o.discount}</p>
                 <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground font-light">
                   {o.description}
