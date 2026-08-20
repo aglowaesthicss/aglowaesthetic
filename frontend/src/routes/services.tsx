@@ -47,8 +47,8 @@ function Services() {
         const off = await api.get<any[]>("/api/content/offers");
         setPinned(off.filter((o) => o.special));
       } catch (err) {
-        console.error("Failed to load offers dynamically, using fallback data:", err);
-        setPinned(OFFERS.filter((o) => o.special));
+        console.error("Failed to load offers dynamically:", err);
+        setPinned([]);
       } finally {
         setLoading(false);
       }
