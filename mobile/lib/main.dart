@@ -49,8 +49,8 @@ class _AglowAppState extends State<AglowApp> {
   Widget build(BuildContext context) {
     if (_checkingAuth) {
       return const MaterialApp(
-        backgroundColor: Color(0xFF151412),
         home: Scaffold(
+          backgroundColor: Color(0xFF151412),
           body: Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
