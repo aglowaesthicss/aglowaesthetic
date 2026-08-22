@@ -81,7 +81,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
               ? const Center(
                   child: Text(
                     'No client stories posted yet.',
-                    style: TextStyle(color: Colors.white55),
+                    style: const TextStyle(color: Colors.white54),
                   ),
                 )
               : ListView.builder(

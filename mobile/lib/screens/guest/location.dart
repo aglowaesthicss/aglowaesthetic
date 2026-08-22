@@ -92,7 +92,7 @@ class _LocationScreenState extends State<LocationScreen> {
               ? const Center(
                   child: Text(
                     'No branch locations registered yet.',
-                    style: TextStyle(color: Colors.white55),
+                    style: const TextStyle(color: Colors.white54),
                   ),
                 )
               : ListView.builder(

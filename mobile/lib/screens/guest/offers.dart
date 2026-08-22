@@ -86,7 +86,7 @@ class _OffersScreenState extends State<OffersScreen> {
               ? const Center(
                   child: Text(
                     'No active promotions right now.',
-                    style: TextStyle(color: Colors.white55),
+                    style: const TextStyle(color: Colors.white54),
                   ),
                 )
               : ListView.builder(

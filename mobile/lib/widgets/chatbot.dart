@@ -104,7 +104,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget> {
                       ),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.between,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
@@ -203,7 +203,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget> {
                           style: TextStyle(
                             color: Color(0xFF8E8C82),
                             fontSize: 12,
-                            italic: true,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),

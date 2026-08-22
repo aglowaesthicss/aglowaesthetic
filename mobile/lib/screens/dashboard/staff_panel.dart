@@ -474,7 +474,7 @@ class _StaffPanelState extends State<StaffPanel> {
           child: Text(
             label.toUpperCase(),
             style: TextStyle(
-              color: isActive ? goldColor : Colors.white55,
+              color: isActive ? goldColor : Colors.white54,
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 1,

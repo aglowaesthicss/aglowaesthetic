@@ -280,7 +280,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     // Client Toggles
                     const Text(
                       'CLIENT ROLE ACCESS',
-                      style: TextStyle(color: Colors.white55, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.5),
+                      style: const TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.5),
                     ),
                     const SizedBox(height: 12),
                     ..._featuresList.map((f) => _buildCheckboxRow(f, 'client', goldColor)),
@@ -289,7 +289,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     // Staff Toggles
                     const Text(
                       'STAFF ROLE ACCESS',
-                      style: TextStyle(color: Colors.white55, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.5),
+                      style: const TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.5),
                     ),
                     const SizedBox(height: 12),
                     ..._featuresList.map((f) => _buildCheckboxRow(f, 'staff', goldColor)),
@@ -337,7 +337,7 @@ class _AdminPanelState extends State<AdminPanel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.between,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -447,7 +447,7 @@ class _AdminPanelState extends State<AdminPanel> {
                                             _replyController.clear();
                                           });
                                         },
-                                        child: const Text('CANCEL', style: TextStyle(color: Colors.white55, fontSize: 11)),
+                                        child: const Text('CANCEL', style: TextStyle(color: Colors.white54, fontSize: 11)),
                                       ),
                                     ],
                                   ),
@@ -485,7 +485,7 @@ class _AdminPanelState extends State<AdminPanel> {
           child: Text(
             label.toUpperCase(),
             style: TextStyle(
-              color: isActive ? goldColor : Colors.white55,
+              color: isActive ? goldColor : Colors.white54,
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 1,

@@ -186,7 +186,7 @@ class _ClientPanelState extends State<ClientPanel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.between,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       h['service_name'] ?? 'Completed Treatment',
@@ -345,7 +345,7 @@ class _ClientPanelState extends State<ClientPanel> {
           child: Text(
             label.toUpperCase(),
             style: TextStyle(
-              color: isActive ? goldColor : Colors.white55,
+              color: isActive ? goldColor : Colors.white54,
               fontSize: 11,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5,

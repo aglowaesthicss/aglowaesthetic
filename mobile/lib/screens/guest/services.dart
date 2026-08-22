@@ -208,7 +208,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ),
                 const SizedBox(height: 12),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.between,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'KOREAN STANDARD',
@@ -222,7 +222,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     Text(
                       service.price != null ? '₹${service.price!.toStringAsFixed(0)}' : 'Pricing on Consult',
                       style: TextStyle(
-                        color: service.price != null ? Colors.white : Colors.white55,
+                        color: service.price != null ? Colors.white : Colors.white54,
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         fontStyle: service.price != null ? FontStyle.normal : FontStyle.italic,
