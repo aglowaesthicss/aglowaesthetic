@@ -463,10 +463,12 @@ class _StaffPanelState extends State<StaffPanel> {
         onTap: () => setState(() => _activeTab = index),
         child: Container(
           alignment: Alignment.center,
-          border: Border(
-            bottom: BorderSide(
-              color: isActive ? goldColor : Colors.transparent,
-              width: 2,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: isActive ? goldColor : Colors.transparent,
+                width: 2,
+              ),
             ),
           ),
           child: Text(
