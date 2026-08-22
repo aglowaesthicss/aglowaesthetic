@@ -6,7 +6,7 @@ class ApiService {
   // Replace with your local IP, 10.0.2.2 (Android Emulator), or production Render backend URL
   static const String baseLocalAndroid = 'http://10.0.2.2:8000';
   static const String baseLocalIos = 'http://localhost:8000';
-  static const String productionUrl = 'https://aglowaesthetic.onrender.com'; // Fallback
+  static const String productionUrl = 'https://aglowaesthetic-backend.onrender.com'; // Correct Render URL
   
   static String get baseUrl => productionUrl; // Default to production, switch as needed
 
